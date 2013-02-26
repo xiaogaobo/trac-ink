@@ -1,0 +1,440 @@
+body, form, th, td, label, #main, #content, #mainnav li, input, div, h1, h2, h3, h4, h5, h6, p {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.4;
+  background: transparent;
+}
+
+body { background: white; }
+
+#proj-search {
+  -webkit-appearance: searchfield;
+}
+
+
+a, a:link, a:visited {
+  color: #484;
+  text-decoration: none;
+  border: none;
+  background-image: none;
+}
+
+input {
+  font-size: 12px;
+}
+
+/* Reset most decoration */
+#metanav a:link, #metanav a:visited, #mainnav a:link, #mainnav a:visited, #mainnav a:hover {
+  color: #666;
+  text-decoration: none;
+  border: none;
+  background-image: none;
+}
+
+/* Remove border highlight on hover */
+#mainnav :link:hover, #mainnav :visited:hover {
+  background: white;
+  border: none;
+  color: #444;
+}
+
+/* Remove default black hover */
+#mainnav .active :link, #mainnav .active :visited {
+  background: none;
+}
+
+a:hover {
+  border: none;
+}
+
+#prefs, div.wiki-toc, #info {
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border: none;
+  margin: 0px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ddd));
+  background: -moz-linear-gradient(top,#eee,#ddd);
+}
+
+#info {
+  margin-bottom: 12px;
+}
+
+#info th {
+  background: none;
+}
+
+dt.changeset, dt.changeset a, dt.newticket, dt.newticket a, dt.reopenedticket, dt.reopenedticket a, dt.editedticket, dt.editedticket a
+dt.closedticket, dt.closedticket a, dt.wiki, dt.wiki a, dt.milestone, dt.milestone a, dt.attachment, dt.attachment a {
+  background: none no-repeat;
+}
+
+dt em {
+  color: #666;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+.milestone .info h2 em {
+  color: #484;
+  text-shadow: 1px 1px 0 #ccc;
+}
+
+#mainnav li a, #ticket table.properties {
+  border: none;
+  background: none;
+  clear: both;
+}
+
+#mainnav li { 
+  margin: 2px 12px 2px 2px;   
+  float: left;
+  background: none;
+  border: none;
+}
+
+#metanav {
+  padding: 6px;
+}
+
+#metanav li { border: none; }
+
+#mainnav a {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#mainnav {
+  overflow: hidden;
+  padding: 8px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  /* Use shadow to create a very thin-looking outline */
+  -moz-box-shadow: 0px 0px 2px #888;
+  -webkit-box-shadow: 0px 0px 2px #888;
+}
+
+#mainnav ul, #mainnav li {
+  padding: 0;
+  background: none;
+}
+
+
+#mainnav a:link, #mainnav a:visited, #mainnav a:hover {
+  border: none;
+  padding-top: 2px;
+  padding-bottom 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin: 0px;
+  border: 0px;
+  text-shadow: 1px 1px 0 #fff;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+
+#mainnav .active :link:hover, #mainnav .active :visited:hover {
+  border: 1px solid #781;
+}
+
+#mainnav .active a, #mainnav .active a:link, #mainnav .active a:visited, #mainnav .active a:hover {
+  /* active section on main navigation bar */
+  text-decoration: none;
+  color: white;
+  background-color: #9B2;
+  border: 1px solid #781;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-box-shadow: inset 1px 1px 1px #781;
+  -webkit-box-shadow: inset 1px 1px 1px #781;
+  text-shadow: 1px 1px 0 #781;
+}
+
+#mainnav .active a:hover {
+  background-color: #ab3;
+}
+
+
+th {
+  background-color: #ededed;
+}
+
+#attachments div {
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#dcdcdc));
+  background: -moz-linear-gradient(top,#efefef,#dfdfdf);
+}
+
+#attachments div form div {
+  background: none;
+}
+
+table.listing tr th {
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+}
+
+tr:first-child th {
+  -moz-border-top-left-radius: 8px;
+  -webkit-border-top-left-radius: 8px;
+}
+tr:last-child th {
+  -moz-border-bottom-left-radius: 8px;
+  -webkit-border-bottom-left-radius: 8px;
+}
+
+.trac-diff tr:first-child th, .trac-diff tr:last-child th {
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+}
+
+#tabs {
+  border: none;
+  background: #eee;
+  background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#dfdfdf));
+  background: -moz-linear-gradient(top,#efefef,#dfdfdf);
+  -moz-box-shadow: 0px 0px 2px #888;
+  -webkit-box-shadow: 0px 0px 2px #888;
+}
+
+#tabs li li {
+  font-weight: bold;
+  text-shadow: 1px 1px 0px white;
+  padding: 2px 2px 2px 9px;
+}
+
+#tabs li li a {
+  color: #666;
+}
+
+#tabs li li.active a {
+ color: white;
+ font-weight: bold;
+ padding-left: 5px;
+}
+
+#tabs li li.active a:hover {
+ color: white;
+ font-weight: bold;
+ padding-left: 5px;
+}
+
+#tabs li li.active:hover {
+ background-color: #ab3;
+}
+
+#tabs li li.active {
+ text-shadow: 1px 1px 0 #781;
+ border: 1px solid #781;
+ box-shadow: inset 1px 1px 1px #781;
+ -moz-box-shadow: inset 1px 1px 1px #781;
+ -webkit-box-shadow: inset 1px 1px 1px #781;
+ border-radius: 6px;
+ -moz-border-radius: 6px;
+ -webkit-border-radius: 6px;
+ padding: 2px 4px 2px 4px;
+ background-color: #9b2;
+}
+
+fieldset, #ticket, #attachments div, #changelog, #tabs, .plugin, #ticketchange {
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+}
+
+#content.ticket {
+  margin: auto;
+}
+
+#ticket table.properties td,
+#ticket table.properties th {
+  color: black;
+  font-size: inherit; /* remove the 80% size */
+}
+
+#ticketchange {
+  border: 1px solid #dcdcdc;
+}
+
+#ticket .description h3, #changelog h3 {
+  border-bottom: 1px solid #ccc;
+  color: #999;
+}
+
+#changelog, #mainnav, #ticket, #tabcontent form .plugin {
+  background: #eee;
+  background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#dfdfdf));
+  background: -moz-linear-gradient(top,#efefef,#dfdfdf);
+  border: none;
+}
+
+#search {
+  background: none;
+}
+
+blockquote.citation {
+  border-color: #9B2;
+}
+
+
+#ticket, #attachments div {
+  border: none;
+  -moz-box-shadow: 0px 0px 2px #888;
+  -webkit-box-shadow: 0px 0px 2px #888;
+}
+
+#attachments form div {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}
+
+/* drafts */
+
+#ticket.ticketdraft {
+  border: 2px solid #efd;
+  background: #eee url(/htdocs/img/preview.png);
+  -webkit-box-shadow: #781 0 0 5px;
+  -moz-box-shadow: #781 0 0 5px;
+}
+
+
+/* Source Browser */
+#anydiff {
+  margin-top: 1em;
+}
+
+
+/* Buttons */
+
+.buttons input {
+  margin: 1em 0.5em 0.1em 0px;
+}
+input[type="button"], input[type="submit"], input[type="reset"] {
+  /*background: -webkit-gradient(linear, left top, left bottom, from(#c5e769), to(#a5c739));*/
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border: 1px solid #ccc;
+  font-weight: bold;
+  padding: 0.5em 0.5em;
+  color: #666;
+}
+input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover {
+  /*background: -webkit-gradient(linear, left top, left bottom, from(#f7c569), to(#d7a539));*/
+  border: 1px solid #999;
+  color: #333;
+  background-color: white;
+  text-shadow: 1px 1px 0 white;
+}
+input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:active {
+  /*background: -webkit-gradient(linear, left top, left bottom, from(#f76969), to(#d73939));*/
+  border: 1px solid #999;
+  color: white;
+  background-color: #9B2;
+  -moz-box-shadow: inset 1px 1px 1px #781;
+  -webkit-box-shadow: inset 1px 1px 1px #781;
+  text-shadow: 1px 1px 0 #781;
+}
+
+textarea {
+  font-family: "Menlo", "Courier New", Courier, monospaced;
+}
+
+textarea, input {
+  border: 1px solid #ccc;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  padding: 4px;
+  background: white;
+  color: #666;
+}
+
+textarea:hover, input:hover {
+  border: 1px solid #999;
+  /*background: #ffe;*/
+  color: #333;
+  text-shadow: 1px 1px 0 white;
+}
+
+textarea:focus, input:focus {
+  background: #efd;
+  outline: none;
+  border: 1px solid #484;
+  -moz-box-shadow: inset #484 0 0 2px; 
+  -webkit-box-shadow: inset #484 0 0 2px;
+}
+
+/* Diff and source code line numbers */
+
+.diff table.trac-diff tbody th, table.code tbody th, table.code tbody th :link, table.code tbody th :visited {
+  background: #eee;
+  color: #bbb;
+}
+
+.diff table.trac-diff th, table.code th {
+  border-right: 1px solid white;
+  border-bottom: 1px solid #ddd;
+  font-size: 11px;
+}
+
+/*
+select {
+-webkit-appearance: button;
+-webkit-border-radius: 6px;
+-webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+ -webkit-user-select: none;
+background-image: url(dropdown.gif), 
+-webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+background-position: center right;
+background-repeat: no-repeat;
+border: 1px solid #AAA;
+color: #555;
+font-size: inherit;
+margin: 0;
+overflow: hidden;
+padding-top: 2px;
+padding-bottom: 2px;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+*/
+
+/* system messages */
+
+#warning.system-message, .warning.system-message {
+  color: darkorange;
+  -moz-box-shadow: orange 0 0 3px; 
+  -webkit-box-shadow: orange 0 0 3px; 
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border: none;
+  background: #ffc;
+  background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ffc));
+  background: -moz-linear-gradient(top,#eee,#ffc);
+}
+
+#content.error .message, .system-message {
+  border: none;
+  -moz-box-shadow: red 0 0 3px; 
+  -webkit-box-shadow: red 0 0 3px; 
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  background: #fdd;
+  background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#fdd));
+  background: -moz-linear-gradient(top,#eee,#fdd);
+}
+
+#notice.system-message, .notice.system-message {
+  color: blue;
+  border: none;
+  -moz-box-shadow: blue 0 0 3px; 
+  -webkit-box-shadow: blue 0 0 3px; 
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  background: #ddf;
+  background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ddf));
+  background: -moz-linear-gradient(top,#eee,#ddf);
+}
+
+#footer {
+	display: none;
+}
+
