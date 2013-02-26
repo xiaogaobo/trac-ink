@@ -1,25 +1,73 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:py="http://genshi.edgewall.org/"
-      py:strip="">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://genshi.edgewall.org/" py:strip="">
 
-  <!--! Add site-specific style sheet -->
-  <head py:match="head" py:attrs="select('@*')">
-    ${select('*|comment()|text()')}
-    <link rel="stylesheet" type="text/css"
-          href="${href.chrome('site/trac-intra-sapo.css')}" />
-  </head>
-
-  <body py:match="body" py:attrs="select('@*')">
-    <!--! Add site-specific header -->
-    <div id="siteheader">
-      <!--! Place your header content here... -->
+    <!-- our own main navigation generator -->
+    <div py:def="navigation(category)" id="${category}" class="nav-collapse">
+        <ul class="menu horizontal black" py:if="chrome.nav[category]">
+            <li><a href="/"><b>Ink</b></a></li>
+            <li py:for="idx, item in enumerate(chrome.nav[category])" class="${classes(first_last(idx, chrome.nav[category]), active=item.active)}">${item.label}</li>
+        </ul>
+        <form class="pull-right" action="/search">
+            <input type="text" name="q" class="search-query" placeholder="Search"/>
+        </form>
     </div>
 
-    ${select('*|text()')}
+    <?python
+        # Remove bad markup from ctxtnav
+        from genshi.builder import Element
+        if chrome['ctxtnav']:
+            replacements = []
+            for item in chrome['ctxtnav']:
+                junk = []
+                if isinstance(item,str):
+                    continue
+                for i in item.children:
+                    if isinstance(i,Element):
+                        replacements.append((item,i))
+                    if isinstance(i, Markup):
+                        junk.append(i)
+                for i in junk:
+                    item.children.remove(i)
+            for item, i in replacements:
+                chrome['ctxtnav'][chrome['ctxtnav'].index(item)] = i
+    ?>
 
-    <!--! Add site-specific footer -->
-    <div id="sitefooter">
-      <!--! Place your footer content here... -->
+    <!-- our own context navigation generator -->
+    <div py:def="ctxtnav" id="${category}" class="subnav">
+        <ul class="nav nav-pills" py:if="chrome.ctxtnav">
+            <li py:for="idx, item in enumerate(chrome.ctxtnav)" class="${classes(first_last(idx, chrome.ctxtnav))}">$item</li>
+        </ul>
     </div>
-  </body>
+
+    <head py:match="head" py:attrs="select('@*')">
+        <title py:if="title">$title</title>
+
+        <!-- remove standard Trac css -->
+        <link py:match="//link[contains(@href,'/chrome/common/css/trac.css')]" py:strip="True"></link>
+        <link py:match="//link[contains(@href,'/chrome/common/css/timeline.css')]" py:strip="True"></link>
+        <link py:match="//link[contains(@href,'/chrome/common/css/report.css')]" py:strip="True"></link>
+        <link py:match="//link[contains(@href,'/chrome/common/css/roadmap.css')]" py:strip="True"></link>
+        <!-- NOTE: CSS ordering is very important here -->
+        <link rel="stylesheet" type="text/css" href="${href.chrome('site/css/ink.css')}" />
+        <script type="text/javascript" src="${href.chrome('site/js/brython.js')}"></script>
+         ${select('*|comment()|text()')}
+    </head>
+    
+    <body py:match="body" py:attrs="select('@*')">
+        <!-- strip the banner div, which we don't need -->
+        <div id="banner" py:match="//div[@id='banner']" py:strip="True"/>
+        <!-- strip the wiki pagepath, which is a relica of bygone eras... -->
+        <div id="pagepath" py:match="//div[@id='pagepath']" py:strip="True"/>
+        <!-- strip the ctxtnav, which we'll reposition in each template -->
+        <div id="ctxtnav" py:match="//div[@id='ctxtnav']" py:strip="True"/>        
+        <div id="footer" py:match="//div[@id='footer']">
+            <center>
+            <a href="${href.about()}"><strong>Trac ${trac.version}</strong></a> by <a href="http://www.edgewall.org/">Edgewall Software</a>. Themed with <a href="http://ink.sapo.pt">InK</a>. Lovingly married at <a href="http://oss.sapo.pt">SAPO</a>.
+            </center>
+        </div>
+        
+        <nav class="ink-navigation" py:match="//div[@id='mainnav']">
+            ${navigation('mainnav')}
+        </nav><!-- navbar -->
+        ${select('*|comment()|text()')}
+    </body>
 </html>
