@@ -37,16 +37,11 @@
                 )
             }
         ]
-        # init colors
-        chrome['bars'] = {
-            'topnav': 'black',
-            'mainnav': 'rounded shadowed grey'
-        }
     ?>
 
     <!-- our own main navigation generator -->
-    <nav py:def="navigation(category)" id="${category}">
-        <ul class="menu horizontal ${chrome.bars[category]}" py:if="chrome.nav[category]">
+    <nav py:def="navigation(category, css_classes='ink-navigation', styling='grey')" id="${category}" class="${css_classes}">
+        <ul class="menu horizontal ${styling}" py:if="chrome.nav[category]">
             <li py:for="idx, item in enumerate(chrome.nav[category])" class="${classes(first_last(idx, chrome.nav[category]), active=item.active)} ${item.override}">${item.label}</li>
         </ul>
     </nav>
@@ -54,7 +49,7 @@
     <!-- our own context navigation generator -->
     <div py:def="ctxtnav" id="${category}" class="subnav">
         <ul class="nav nav-pills" py:if="chrome.ctxtnav">
-            <li py:for="idx, item in enumerate(chrome.ctxtnav)" class="${classes(first_last(idx, chrome.ctxtnav))}">$item</li>
+            <li py:for="idx, item in enumerate(chrome.ctxnav)" class="${classes(first_last(idx, chrome.ctxtnav))}">$item</li>
         </ul>
     </div>
 
@@ -84,17 +79,11 @@
         <nav id="mainnav" py:match="//nav[@id='mainnav']" py:strip="True"/>        
 
         <div id="topbar">
-            <nav class="ink-grid ink-navigation">
-                ${navigation('topnav')}
-            </nav><!-- top navbar -->
+            ${navigation('topnav','ink-grid ink-navigation','black')}
         </div>
 
         <div id="main" class="ink-grid" py:match="//div[@id='main']">
-            <nav class="ink-navigation vspace">
-                ${navigation('mainnav')}
-            </nav><!-- navbar -->
-
-
+            ${navigation('mainnav','ink-navigation vspace','rounded shadowed grey')}
             ${select('*|comment()|text()')}
 
             <div class="ink-alert block">
@@ -102,7 +91,6 @@
                 <h4>Debugging</h4>
                 <p>
                     <pre>${pprint(chrome)}</pre>
-                    <pre>${pprint(classes)}</pre>
                 </p>
             </div>
 
