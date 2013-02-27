@@ -23,6 +23,13 @@
         chrome['nav']['topnav'] = [
             {'active': True, 'label': Element('a', href='/')('Project'), 'name': 'project'},
             {'override': 'pull-right',
+                'label': Element('a', href="#")(
+                    Element('img', src='http://intra.sapo.pt/i/avatar/32/rcarmo'),
+                    Element('ul', class_ = 'submenu')
+                    # TODO - insert preferences submenu here
+                )
+            },
+            {'override': 'pull-right',
                 'label': Element('form', action = '/search', class_='ink-form')(
                     Element('div', class_='control')(
                         Element('input', type='search', name='q', class_='search-query', placeholder='Search')
@@ -30,15 +37,19 @@
                 )
             }
         ]
+        # init colors
+        chrome['bars'] = {
+            'topnav': 'black',
+            'mainnav': 'rounded shadowed grey'
+        }
     ?>
 
     <!-- our own main navigation generator -->
-    <div py:def="navigation(category)" id="${category}">
-        <ul class="menu horizontal black" py:if="chrome.nav[category]">
-            <li><a href="/"><b>Trac</b></a></li>
+    <nav py:def="navigation(category)" id="${category}">
+        <ul class="menu horizontal ${chrome.bars[category]}" py:if="chrome.nav[category]">
             <li py:for="idx, item in enumerate(chrome.nav[category])" class="${classes(first_last(idx, chrome.nav[category]), active=item.active)} ${item.override}">${item.label}</li>
         </ul>
-    </div>
+    </nav>
 
     <!-- our own context navigation generator -->
     <div py:def="ctxtnav" id="${category}" class="subnav">
@@ -70,6 +81,7 @@
         <div id="pagepath" py:match="//div[@id='pagepath']" py:strip="True"/>
         <!-- strip the ctxtnav, which we'll reposition in each template -->
         <div id="ctxtnav" py:match="//div[@id='ctxtnav']" py:strip="True"/>        
+        <nav id="mainnav" py:match="//nav[@id='mainnav']" py:strip="True"/>        
 
         <div id="topbar">
             <nav class="ink-grid ink-navigation">
@@ -78,9 +90,11 @@
         </div>
 
         <div id="main" class="ink-grid" py:match="//div[@id='main']">
-            <nav class="ink-navigation vspace" py:match="//div[@id='mainnav']">
+            <nav class="ink-navigation vspace">
                 ${navigation('mainnav')}
             </nav><!-- navbar -->
+
+
             ${select('*|comment()|text()')}
 
             <div class="ink-alert block">
