@@ -1,20 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://genshi.edgewall.org/" py:strip="">
 
-    <!-- our own main navigation generator -->
-    <div py:def="navigation(category)" id="${category}">
-        <ul class="menu horizontal black" py:if="chrome.nav[category]">
-            <li><a href="/"><b>Ink</b></a></li>
-            <li py:for="idx, item in enumerate(chrome.nav[category])" class="${classes(first_last(idx, chrome.nav[category]), active=item.active)}">${item.label}</li>
-            <li class="pull-right">
-                <form class="ink-form" action="/search">
-                    <div class="control">
-                        <input type="search" name="q" class="search-query" placeholder="Search"/>
-                    </div>
-                </form>
-            </li>
-        </ul>
-    </div>
-
     <?python
         # Remove bad markup from ctxtnav
         from genshi.builder import Element
@@ -35,7 +20,25 @@
                 chrome['ctxtnav'][chrome['ctxtnav'].index(item)] = i
 
         # init topnav
+        chrome['nav']['topnav'] = [
+            {'active': True, 'label': Element('a', href='/')('Project'), 'name': 'project'},
+            {'override': 'pull-right',
+                'label': Element('form', action = '/search', class_='ink-form')(
+                    Element('div', class_='control')(
+                        Element('input', type='search', name='q', class_='search-query', placeholder='Search')
+                    )
+                )
+            }
+        ]
     ?>
+
+    <!-- our own main navigation generator -->
+    <div py:def="navigation(category)" id="${category}">
+        <ul class="menu horizontal black" py:if="chrome.nav[category]">
+            <li><a href="/"><b>Trac</b></a></li>
+            <li py:for="idx, item in enumerate(chrome.nav[category])" class="${classes(first_last(idx, chrome.nav[category]), active=item.active)} ${item.override}">${item.label}</li>
+        </ul>
+    </div>
 
     <!-- our own context navigation generator -->
     <div py:def="ctxtnav" id="${category}" class="subnav">
@@ -70,11 +73,11 @@
 
         <div id="topbar">
             <nav class="ink-grid ink-navigation">
-                ${navigation('mainnav')}
+                ${navigation('topnav')}
             </nav><!-- top navbar -->
         </div>
 
-        <div id="main" class="ink-container" py:match="//div[@id='main']">
+        <div id="main" class="ink-grid" py:match="//div[@id='main']">
             <nav class="ink-navigation vspace" py:match="//div[@id='mainnav']">
                 ${navigation('mainnav')}
             </nav><!-- navbar -->
@@ -84,9 +87,8 @@
                 <button class="ink-close">&times;</button>
                 <h4>Debugging</h4>
                 <p>
-                    <pre>
-                    ${pprint(chrome.nav)}
-                    </pre>
+                    <pre>${pprint(chrome)}</pre>
+                    <pre>${pprint(classes)}</pre>
                 </p>
             </div>
 
