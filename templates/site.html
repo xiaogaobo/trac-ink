@@ -1,14 +1,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://genshi.edgewall.org/" py:strip="">
 
     <!-- our own main navigation generator -->
-    <div py:def="navigation(category)" id="${category}" class="nav-collapse">
+    <div py:def="navigation(category)" id="${category}">
         <ul class="menu horizontal black" py:if="chrome.nav[category]">
             <li><a href="/"><b>Ink</b></a></li>
             <li py:for="idx, item in enumerate(chrome.nav[category])" class="${classes(first_last(idx, chrome.nav[category]), active=item.active)}">${item.label}</li>
+            <li class="pull-right">
+                <form class="ink-form" action="/search">
+                    <div class="control">
+                        <input type="search" name="q" class="search-query" placeholder="Search"/>
+                    </div>
+                </form>
+            </li>
         </ul>
-        <form class="pull-right" action="/search">
-            <input type="text" name="q" class="search-query" placeholder="Search"/>
-        </form>
     </div>
 
     <?python
@@ -29,6 +33,8 @@
                     item.children.remove(i)
             for item, i in replacements:
                 chrome['ctxtnav'][chrome['ctxtnav'].index(item)] = i
+
+        # init topnav
     ?>
 
     <!-- our own context navigation generator -->
@@ -42,12 +48,14 @@
         <title py:if="title">$title</title>
 
         <!-- remove standard Trac css -->
+        <link py:match="//link[contains(@href,'/chrome/common/css/wiki.css')]" py:strip="True"></link>
         <link py:match="//link[contains(@href,'/chrome/common/css/trac.css')]" py:strip="True"></link>
         <link py:match="//link[contains(@href,'/chrome/common/css/timeline.css')]" py:strip="True"></link>
         <link py:match="//link[contains(@href,'/chrome/common/css/report.css')]" py:strip="True"></link>
         <link py:match="//link[contains(@href,'/chrome/common/css/roadmap.css')]" py:strip="True"></link>
         <!-- NOTE: CSS ordering is very important here -->
         <link rel="stylesheet" type="text/css" href="${href.chrome('site/css/ink.css')}" />
+        <link rel="stylesheet" type="text/css" href="${href.chrome('site/css/trac-ink.css')}" />
         <script type="text/javascript" src="${href.chrome('site/js/brython.js')}"></script>
          ${select('*|comment()|text()')}
     </head>
@@ -59,15 +67,38 @@
         <div id="pagepath" py:match="//div[@id='pagepath']" py:strip="True"/>
         <!-- strip the ctxtnav, which we'll reposition in each template -->
         <div id="ctxtnav" py:match="//div[@id='ctxtnav']" py:strip="True"/>        
+
+        <div id="topbar">
+            <nav class="ink-grid ink-navigation">
+                ${navigation('mainnav')}
+            </nav><!-- top navbar -->
+        </div>
+
+        <div id="main" class="ink-container" py:match="//div[@id='main']">
+            <nav class="ink-navigation vspace" py:match="//div[@id='mainnav']">
+                ${navigation('mainnav')}
+            </nav><!-- navbar -->
+            ${select('*|comment()|text()')}
+
+            <div class="ink-alert block">
+                <button class="ink-close">&times;</button>
+                <h4>Debugging</h4>
+                <p>
+                    <pre>
+                    ${pprint(chrome.nav)}
+                    </pre>
+                </p>
+            </div>
+
+        </div >
+
         <div id="footer" py:match="//div[@id='footer']">
             <center>
             <a href="${href.about()}"><strong>Trac ${trac.version}</strong></a> by <a href="http://www.edgewall.org/">Edgewall Software</a>. Themed with <a href="http://ink.sapo.pt">InK</a>. Lovingly married at <a href="http://oss.sapo.pt">SAPO</a>.
             </center>
         </div>
         
-        <nav class="ink-navigation" py:match="//div[@id='mainnav']">
-            ${navigation('mainnav')}
-        </nav><!-- navbar -->
+
         ${select('*|comment()|text()')}
     </body>
 </html>
