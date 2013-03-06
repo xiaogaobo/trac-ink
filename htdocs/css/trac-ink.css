@@ -24,6 +24,27 @@ section {
     border-bottom-width: 1px;
 }
 
+.collapsed > div, .collapsed > table, .collapsed > ul, .collapsed > dl { display: none }
+
 .inlinebuttons {
     float: right;
+}
+
+.align-right {
+    float: right;
+}
+
+
+.ink-button-active {
+  background: #dcdcdc;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dcdcdc', endColorstr='#ffffff');
+  background: -moz-linear-gradient(top, #dcdcdc 0%, #ffffff 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #dcdcdc), color-stop(100%, #ffffff));
+  background: -webkit-linear-gradient(top, #dcdcdc 0%, #ffffff 100%);
+  background: -o-linear-gradient(top, #dcdcdc 0%, #ffffff 100%);
+  background: -ms-linear-gradient(top, #dcdcdc 0%, #ffffff 100%);
+  background: linear-gradient(to bottom, #dcdcdc 0%, #ffffff 100%);
+  -webkit-box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.25) inset;
+  -moz-box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.25) inset;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.25) inset;
 }
