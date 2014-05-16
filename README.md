@@ -1,7 +1,6 @@
-# trac-ink
+trac-ink
+========
 
-This directory contains a Trac 1.0.1 environment and a set of custom HTML templates.
+An attempt at re-skinning Trac using Ink 3.0.1, done as a side project.
 
-## Requirements
-
-The target Python version is 2.6 (to comply with Debian stubbornness).
+This directory contains a Trac 1.0.1 environment and a set of custom HTML templates that replace the ones built in to Trac and selectively override portions of the layout.

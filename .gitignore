@@ -1,14 +1,20 @@
+<<<<<<< HEAD
 # Mac stuff
 .DS_Store
 ._.DS_Store
 .fslckout
 
 # Python objects
+=======
+# Byte-compiled / optimized / DLL files
+__pycache__/
+>>>>>>> 1f4a4ce3e7730174f0ac469919bfa9045a14ba8a
 *.py[cod]
 
 # C extensions
 *.so
 
+<<<<<<< HEAD
 # Packages
 *.egg
 *.egg-info
@@ -29,6 +35,36 @@ pip-log.txt
 .coverage
 .tox
 nosetests.xml
+=======
+# Distribution / packaging
+.Python
+env/
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+>>>>>>> 1f4a4ce3e7730174f0ac469919bfa9045a14ba8a
 
 # Translations
 *.mo
@@ -38,6 +74,19 @@ nosetests.xml
 .project
 .pydevproject
 
+<<<<<<< HEAD
 # Database
 *.db
 *.bak
+=======
+# Rope
+.ropeproject
+
+# Django stuff:
+*.log
+*.pot
+
+# Sphinx documentation
+docs/_build/
+
+>>>>>>> 1f4a4ce3e7730174f0ac469919bfa9045a14ba8a
