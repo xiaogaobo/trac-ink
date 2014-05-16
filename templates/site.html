@@ -16,21 +16,21 @@
                         junk.append(i)
                 for i in junk:
                     item.children.remove(i)
-            for item, i in replacements:
-                chrome['ctxtnav'][chrome['ctxtnav'].index(item)] = i
+            #for item, i in replacements:
+            #    chrome['ctxtnav'][chrome['ctxtnav'].index(item)] = i
 
         # init topnav
         chrome['nav']['topnav'] = [
-            {'active': True, 'label': Element('a', href='/')('Project'), 'name': 'project'},
+            {'active': True, 'label': Element('a', href='/')('%s' % chrome['logo']['alt']), 'name': 'project'},
             {'override': 'pull-right',
                 'label': Element('a', href="#")(
-                    Element('img', src='http://intra.sapo.pt/i/avatar/32/rcarmo'),
+                    Element('img', src='http://intra.sapo.pt/i/avatar/32/%s' % authname),
                     Element('ul', class_ = 'submenu')
                     # TODO - insert preferences submenu here
                 )
             },
             {'override': 'pull-right',
-                'label': Element('form', action = '/search', class_='ink-form')(
+                'label': Element('form', action = chrome['links']['search'][0]['href'], class_='ink-form')(
                     Element('div', class_='control')(
                         Element('input', type='search', name='q', class_='search-query', placeholder='Search')
                     )
@@ -75,8 +75,27 @@
         <!-- strip the wiki pagepath, which is a relica of bygone eras... -->
         <div id="pagepath" py:match="//div[@id='pagepath']" py:strip="True"/>
         <!-- strip the ctxtnav, which we'll reposition in each template -->
-        <div id="ctxtnav" py:match="//div[@id='ctxtnav']" py:strip="True"/>        
-        <nav id="mainnav" py:match="//nav[@id='mainnav']" py:strip="True"/>        
+        <div id="ctxtnav" py:match="//div[@id='ctxtnav']" py:strip="True"/>
+        <nav id="mainnav" py:match="//nav[@id='mainnav']" py:strip="True"/> 
+        
+        <!-- re-style active items in pagination -->
+        <li py:match="//li[@class='current']" py:attrs="{'class':'active'}">
+         ${select('*|comment()|text()')}
+        </li>
+
+        <!-- ink all the tables -->
+        <table py:match="//table[contains(@class,'listing')]" py:attrs="{'class':'ink-table'}">
+         ${select('*|comment()|text()')}
+        </table>
+
+        <!-- ink all the forms -->
+        <form py:match="//form" py:attrs="{'class':'ink-form'}">
+         ${select('*|comment()|text()')}
+        </form>
+
+        <input py:match="//xinput[@type='submit']" py:attrs="{'class':'ink-button blue'}">
+         ${select('*|comment()|text()')}
+        </input>
 
         <div id="topbar">
             ${navigation('topnav','ink-grid ink-navigation','black')}
@@ -86,6 +105,7 @@
             ${navigation('mainnav','ink-navigation vspace','rounded shadowed grey')}
             ${select('*|comment()|text()')}
 
+            <!--
             <div class="ink-alert block">
                 <button class="ink-close">&times;</button>
                 <h4>Debugging</h4>
@@ -93,6 +113,7 @@
                     <pre>${pprint(chrome)}</pre>
                 </p>
             </div>
+            -->
 
         </div >
 

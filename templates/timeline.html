@@ -16,7 +16,7 @@
  
       <h1>Timeline</h1> 
  
-      <form id="prefs" method="get" action=""> 
+      <form class="ink-form" id="prefs" method="get" action=""> 
        <div i18n:msg=""> 
         <label>View changes from <input type="text" size="10" name="from" value="${format_date(fromdate)}" /></label> <br /> 
         and <label><input type="text" size="3" name="daysback" value="$daysback" /> days back</label><br /> 
@@ -35,26 +35,26 @@
  
       <py:for each="day, events in groupby(events, key=lambda e: format_date(e.date))"> 
         <h2>${day}: ${_("Today") if day == today else _("Yesterday") if day == yesterday else None}</h2> 
-        <dl py:for="unread, events in groupby(events, key=lambda e: lastvisit and lastvisit &lt; e.dateuid)"
-            class="${'unread' if unread else None}"> 
+        <ul py:for="unread, events in groupby(events, key=lambda e: lastvisit and lastvisit &lt; e.dateuid)"
+            class="unstyled ${'unread' if unread else None}"> 
           <py:for each="event in events"
             py:with="highlight = precision and precisedate and timedelta(0) &lt;= (event.date - precisedate) &lt; precision"> 
-            <dt class="${classes(event.kind, highlight=highlight, unread=unread)}"> 
+            <li class="${classes(event.kind, highlight=highlight, unread=unread)}"> 
               <a href="${event.render('url', context)}" py:choose=""> 
-                <py:when test="event.author"><i18n:msg params="time, title, author"> 
-                  <div class="author_avatar"></div><span class="time">${format_time(event.date, str('%H:%M'))}</span> ${event.render('title', context)}
+                <py:when test="event.author">
+                <div><img src="//intra.sapo.pt/api/v1/photos/32/${event.author}"/>
+                    ${format_author(event.author)}
+                </div><span class="time">${format_time(event.date, str('%H:%M'))}</span> ${event.render('title', context)}
                   <!-- by <span class="author">${format_author(event.author)}</span> -->
-                </i18n:msg></py:when> 
+                </py:when> 
                 <py:otherwise> 
                   <span class="time">${format_time(event.date, str('%H:%M'))}</span> ${event.render('title', context)}
                 </py:otherwise> 
               </a> 
-            </dt> 
-            <dd class="${classes(event.kind, highlight=highlight)}"> 
               ${event.render('description', context)}
-            </dd> 
+            </li> 
           </py:for> 
-        </dl> 
+        </ul> 
       </py:for> 
  
       <div id="help" i18n:msg=""> 

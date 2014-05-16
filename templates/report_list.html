@@ -8,104 +8,43 @@
   <xi:include href="layout.html" />
   <head>
     <title>Available Reports</title>
-    <script type="text/javascript" src="${chrome.htdocs_location}js/folding.js"></script>
-    <script type="text/javascript">
-      jQuery(document).ready(function($){
-        $("span.foldable").enableFolding(true);
-        $("#trac-toggle-description").click(function() {
-          if ($(this).checked())
-            $("div.description").parent().removeClass("collapsed");
-          else
-            $("div.description").parent().addClass("collapsed");
-        });
-      });
-    </script>
   </head>
 
   <body>
     <div id="content" class="report">
-
       <h1>Available Reports</h1>
 
-      <section id="descriptions-form">
+      <div id="description" xml:space="preserve" />
 
-      <form id="prefs" method="get" action="">
-        <div>
-          <input id="trac-toggle-description" type="checkbox" />
-          <label for="trac-toggle-description">Show Descriptions</label>
-        </div>
-      </form>
+      <table class="ink-table alternating ink-bordered ink-hover"
+             py:with="any_edit = any(can_edit for id, title, can_edit, can_delete in reports);
+                      any_delete = any(can_delete for id, title, can_edit, can_delete in reports)">
+        <thead><tr>
+          <th><a href="${href.report(sort='report', asc=(sort == 'report' and asc) and '0' or '1')}">ID</a></th>
+          <th><a href="${href.report(sort='title', asc=(sort == 'title' and asc) and '0' or '1')}">Title</a></th>
+          <th py:if="any_edit or any_delete" colspan="${any_edit and any_delete and '2' or None}">Actions</th>
+        </tr></thead>
 
-      </section>
-
-      <div id="description" />
-
-      <section id="report-list">
-
-      <div py:choose="" class="reports">
-        <div py:if="saved_query_href">
-          <form method="get" action="${href.report()}">
-            <div class="inlinebuttons">
-
-              <input type="hidden" name="action" value="clear" />
-              <input type="submit" value="${captioned_button('x', _('Clear'))}" title="Forget last query" class="trac-delete" />
-            </div>
-          </form>
-          <h3><a href="$saved_query_href"><em>Return to Last Query</em></a></h3>
-          <span class="foldable" />
-          <div class="description">
-            <p>Continue browsing through the current list of results,
-              from the last selected report or custom query.</p>
-          </div>
-        </div>
-
-        <div py:if="query_href">
-          <h3><a href="$query_href"><em>Custom Query</em></a></h3>
-          <span class="foldable" />
-          <div class="description">
-            <p>Compose a new ticket query by selecting filters and columns to display.</p>
-          </div>
-        </div>
-
-        <py:when test="reports">
-            <span class="align-right" id="trac-sort-order" py:with="report_asc = asc if sort == 'report' else None;
-                                                title_asc = asc if sort == 'title' else None">
-            <div class="button-group">
-              <a href="${href.report(sort='report', asc='0' if report_asc else '1')}"
-                  class="ink-button ${'ink-button-active' if sort == 'report' else None} ${('desc', 'asc')[report_asc] if report_asc is not None else None}"><i class="${('icon-arrow-down','icon-arrow-up')[report_asc] if report_asc is not None else None}"></i> Identifier</a>
-              <a href="${href.report(sort='title', asc='0' if title_asc else '1')}"
-                  class="ink-button ${'ink-button-active' if sort == 'title' else None} ${('desc', 'asc')[title_asc] if title_asc is not None else None}"><i class="${('icon-arrow-down','icon-arrow-up')[title_asc] if title_asc is not None else None}"></i>Title</a>
-            </div>
-            </span>
-        <h2>SQL reports and saved custom queries</h2>
-
-          <div py:for="id, title, description, can_edit, can_delete in reports">
-            <div class="inlinebuttons button-group">
-                <a py:if="can_delete" href="${href.report(id)}?action=delete" class="ink-button"  title="Delete report"><i class="icon-trash"></i> ${_('Delete')}</a>
-                <a py:if="can_edit" href="${href.report(id)}?action=edit" class="ink-button"  title="Edit report"><i class="icon-pencil"></i> ${_('Edit')}</a>
-            </div>
-            <h3><a title="View report" href="${href.report(id)}" py:choose="sort">
-              <py:when test="'title'">$title <em>{$id}</em></py:when>
-              <py:otherwise><em>{$id}</em> $title</py:otherwise>
-              </a></h3>
-            <span class="foldable" />
-            <div py:if="description" class="description" xml:space="preserve">
-              ${wiki_to_html(context, description)}
-            </div>
-          </div>
-        </py:when>
-        <p py:otherwise="">No reports available.</p>
-      </div>
-
-
-      </section>
-
-
+        <tbody py:choose="">
+          <tr py:when="reports" py:for="id, title, can_edit, can_delete in reports">
+            <td class="report"><a title="View report" href="${href.report(id)}">$id</a></td>
+            <td class="title"><a title="View report" href="${href.report(id)}">$title</a></td>
+            <td class="action" py:if="any_edit"><a py:if="can_edit" href="${href.report(id, action='edit')}"
+                    title="Edit report"><i class="icon-edit"></i> Edit</a></td>
+            <td class="action" py:if="any_delete"><a py:if="can_delete" href="${href.report(id, action='delete')}"
+                    title="Delete report"><i class="icon-remove"></i> Delete</a></td>
+          </tr>
+          <tr py:otherwise="">
+            <td colspan="${2 + any_edit + any_delete}">No reports available.</td>
+          </tr>
+        </tbody>
+      </table>
+      
       <div py:if="'REPORT_CREATE' in perm" class="buttons">
         <form action="" method="get" id="create_report">
           <div>
             <input type="hidden" name="action" value="new" />
-            <button class="ink-button" type="submit"><i class="icon-pencil"></i> ${_('Create new report')}</button>
+            <input type="submit" value="${_('Create new report')}" />
           </div>
         </form>
       </div>
@@ -117,3 +56,4 @@
     </div>
   </body>
 </html>
+
